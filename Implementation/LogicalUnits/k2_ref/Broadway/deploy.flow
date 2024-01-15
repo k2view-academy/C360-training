@@ -39,7 +39,7 @@
         {
             "stages": [
                 {
-                    "name": "Stage 3",
+                    "name": "True",
                     "dependsOnList": [
                         "Parameters"
                     ],
@@ -65,7 +65,7 @@
                     ]
                 },
                 {
-                    "name": "Stage 4",
+                    "name": "False",
                     "dependsOnList": [
                         "Parameters"
                     ],
@@ -81,7 +81,7 @@
                 {
                     "name": "Roles and Databases",
                     "dependsOnList": [
-                        "Stage 3"
+                        "True"
                     ],
                     "isLast": 0,
                     "actors": [
@@ -101,9 +101,9 @@
                     ]
                 },
                 {
-                    "name": "Stage 5",
+                    "name": "Stage 1 ",
                     "dependsOnList": [
-                        "Stage 4"
+                        "False"
                     ],
                     "isLast": 0,
                     "isTransactional": false,
@@ -136,9 +136,9 @@
                     ]
                 },
                 {
-                    "name": "Stage 6",
+                    "name": "Stage 2 ",
                     "dependsOnList": [
-                        "Stage 5"
+                        "Stage 1 "
                     ],
                     "isLast": 0,
                     "isTransactional": false,
@@ -172,9 +172,9 @@
                     ]
                 },
                 {
-                    "name": "Stage 8",
+                    "name": "Stage 3",
                     "dependsOnList": [
-                        "Stage 6"
+                        "Stage 2 "
                     ],
                     "isLast": 0,
                     "isTransactional": false,
@@ -202,8 +202,8 @@
                                         "const": "populateDbs"
                                     },
                                     {
-                                        "name": "interface",
                                         "const": "CRM_DB",
+                                        "name": "interface",
                                         "schema": {
                                             "type": "string"
                                         },
@@ -220,8 +220,8 @@
                                         "mandatory": false
                                     },
                                     {
-                                        "name": "path",
                                         "const": "DEMO/crm.sql.gz",
+                                        "name": "path",
                                         "schema": {
                                             "type": "string"
                                         },
@@ -234,9 +234,9 @@
                     ]
                 },
                 {
-                    "name": "Stage 2",
+                    "name": "Stage 4",
                     "dependsOnList": [
-                        "Stage 8"
+                        "Stage 3"
                     ],
                     "isLast": 0,
                     "isTransactional": false,
@@ -264,8 +264,8 @@
                                         "const": "populateDbs"
                                     },
                                     {
-                                        "name": "interface",
                                         "const": "BILLING_DB",
+                                        "name": "interface",
                                         "schema": {
                                             "type": "string"
                                         },
@@ -282,8 +282,8 @@
                                         "mandatory": false
                                     },
                                     {
-                                        "name": "path",
                                         "const": "DEMO/billing.sql.gz",
+                                        "name": "path",
                                         "schema": {
                                             "type": "string"
                                         },
@@ -296,9 +296,9 @@
                     ]
                 },
                 {
-                    "name": "Stage 9",
+                    "name": "Stage 5",
                     "dependsOnList": [
-                        "Stage 2"
+                        "Stage 4"
                     ],
                     "isLast": 0,
                     "isTransactional": false,

@@ -1,0 +1,111 @@
+{
+    "levels": [
+        {
+            "stages": [
+                {
+                    "name": "remove CRM_DB",
+                    "dependsOnList": [],
+                    "isLast": 0,
+                    "actors": [
+                        {
+                            "name": "rm1",
+                            "actorType": {
+                                "parentType": "rm",
+                                "inputs": [
+                                    {
+                                        "name": "interface",
+                                        "const": "file:///"
+                                    },
+                                    {
+                                        "name": "path",
+                                        "const": "/opt/apps/fabric/workspace/project/Implementation/SharedObjects/Interfaces/Databases/CRM_DB.k2dbConn.xml"
+                                    }
+                                ],
+                                "outputs": []
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "stages": [
+                {
+                    "name": "remove BILLING_DB",
+                    "dependsOnList": [],
+                    "isLast": 0,
+                    "actors": [
+                        {
+                            "name": "rm2",
+                            "actorType": {
+                                "parentType": "rm",
+                                "inputs": [
+                                    {
+                                        "name": "interface",
+                                        "const": "file:///"
+                                    },
+                                    {
+                                        "name": "path",
+                                        "const": "/opt/apps/fabric/workspace/project/Implementation/SharedObjects/Interfaces/Databases/BILLING_DB.k2dbConn.xml"
+                                    }
+                                ],
+                                "outputs": []
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "stages": [
+                {
+                    "name": "Stage 3",
+                    "dependsOnList": [],
+                    "isLast": 0,
+                    "actors": []
+                }
+            ]
+        },
+        {
+            "stages": [
+                {
+                    "name": "Stage 4",
+                    "dependsOnList": [],
+                    "isLast": 0,
+                    "actors": []
+                }
+            ]
+        },
+        {
+            "stages": [
+                {
+                    "name": "Stage 5",
+                    "dependsOnList": [],
+                    "isLast": 0,
+                    "actors": []
+                }
+            ]
+        },
+        {
+            "stages": [
+                {
+                    "name": "Stage 6",
+                    "dependsOnList": [],
+                    "isLast": 0,
+                    "actors": []
+                }
+            ]
+        },
+        {
+            "stages": [
+                {
+                    "name": "Stage 7",
+                    "dependsOnList": [],
+                    "isLast": 0,
+                    "actors": []
+                }
+            ]
+        }
+    ],
+    "connections": []
+}

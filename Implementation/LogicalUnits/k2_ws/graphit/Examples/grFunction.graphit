@@ -1,0 +1,15 @@
+{
+  "name": "RootNode",
+  "children": [
+    {
+      "name": "Function Node Type Example",
+      "type": "function",
+      "code": "var x = Math.floor(Math.random() * Math.PI); \nvar y = Math.floor(Math.random() * Math.floor(3)); \n\nif (x > y) {\n  \"x is bigger than y\"\n}else {\n  //customer_id = customer_id * 22\n  \"y is bigger than x\"\n}"
+    }
+  ],
+  "params": [],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

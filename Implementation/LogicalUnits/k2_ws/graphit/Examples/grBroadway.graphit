@@ -1,0 +1,34 @@
+{
+  "type": "sql",
+  "code": "broadway k2_ws.brFindMinMax 'a'=${input_a} 'b'=${input_b}",
+  "children": [
+    {
+      "name": "Min",
+      "type": "variable",
+      "code": "Min"
+    },
+    {
+      "name": "Max",
+      "type": "variable",
+      "code": "Max"
+    }
+  ],
+  "params": [
+    {
+      "name": "input_a",
+      "dataType": "Integer",
+      "description": "",
+      "mandatory": false
+    },
+    {
+      "name": "input_b",
+      "dataType": "Integer",
+      "description": "",
+      "mandatory": false
+    }
+  ],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

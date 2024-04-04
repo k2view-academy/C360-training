@@ -1,0 +1,48 @@
+{
+  "name": "Root",
+  "children": [
+    {
+      "name": "SUBSCRIBERS",
+      "type": "collect",
+      "serializerSettings": [
+        {
+          "set": "nice",
+          "value": "true"
+        }
+      ],
+      "children": [
+        {
+          "name": "CRM_DB ",
+          "type": "sql",
+          "code": "Select FIRST_NAME\nFrom CUSTOMER limit 5",
+          "sessionProvider": "CRM_DB",
+          "children": [
+            {
+              "name": "NAME_CRM",
+              "type": "variable",
+              "code": "FIRST_NAME"
+            }
+          ]
+        },
+        {
+          "name": "BILLING_DB",
+          "type": "sql",
+          "code": "Select FIRST_NAME\nFrom SUBSCRIBER limit 5",
+          "sessionProvider": "BILLING_DB",
+          "children": [
+            {
+              "name": "NAME_BILLING",
+              "type": "variable",
+              "code": "FIRST_NAME"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "params": [],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

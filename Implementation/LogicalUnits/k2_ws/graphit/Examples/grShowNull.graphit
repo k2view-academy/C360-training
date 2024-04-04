@@ -1,0 +1,40 @@
+{
+  "name": "Root",
+  "serializerSettings": [
+    {
+      "set": "nice",
+      "value": "true"
+    }
+  ],
+  "children": [
+    {
+      "name": "SHOW_NULL_TRUE",
+      "type": "sql",
+      "code": "Select SUBSCRIBER.SUBSCRIBER_ID,\n  SUBSCRIBER.MSISDN,\n  SUBSCRIBER.LAST_NAME,\n  (Case SUBSCRIBER.LAST_NAME When 'Griffin' Then Null Else SUBSCRIBER.LAST_NAME\n  End) As LAST_NAME_SET_TO_NULL\nFrom SUBSCRIBER\nWhere SUBSCRIBER.SUBSCRIBER_ID = '1'",
+      "serializerSettings": [
+        {
+          "set": "showNull",
+          "value": "true"
+        }
+      ],
+      "sessionProvider": "BILLING_DB"
+    },
+    {
+      "name": "SHOW_NULL_FALSE",
+      "type": "sql",
+      "code": "Select SUBSCRIBER.SUBSCRIBER_ID,\n  SUBSCRIBER.MSISDN,\n  SUBSCRIBER.LAST_NAME,\n  (Case SUBSCRIBER.LAST_NAME When 'Griffin' Then Null Else SUBSCRIBER.LAST_NAME\n  End) As LAST_NAME_SET_TO_NULL\nFrom SUBSCRIBER\nWhere SUBSCRIBER.SUBSCRIBER_ID = '1'",
+      "serializerSettings": [
+        {
+          "set": "showNull",
+          "value": "false"
+        }
+      ],
+      "sessionProvider": "BILLING_DB"
+    }
+  ],
+  "params": [],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

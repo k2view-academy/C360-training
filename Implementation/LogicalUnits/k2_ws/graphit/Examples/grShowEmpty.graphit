@@ -1,0 +1,22 @@
+{
+  "name": "Root",
+  "children": [
+    {
+      "name": "SUBSCRIBERS",
+      "type": "sql",
+      "code": "Select SUBSCRIBER.SUBSCRIBER_ID,\n  SUBSCRIBER.MSISDN,\n  SUBSCRIBER.FIRST_NAME,\n  SUBSCRIBER.LAST_NAME\nFrom SUBSCRIBER where subscriber_id='0'",
+      "serializerSettings": [
+        {
+          "set": "showEmpty",
+          "value": "true"
+        }
+      ],
+      "sessionProvider": "BILLING_DB"
+    }
+  ],
+  "params": [],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Root",
+  "serializerSettings": [
+    {
+      "set": "nice",
+      "value": "true"
+    }
+  ],
+  "children": [
+    {
+      "name": "XML_ONLY",
+      "type": "string",
+      "code": "This node is displayed only if the requested output format is XML",
+      "format": "XML"
+    },
+    {
+      "name": "ALL_FORMATS",
+      "type": "string",
+      "code": "This node is always displayed."
+    }
+  ],
+  "params": [],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

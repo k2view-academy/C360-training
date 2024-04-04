@@ -1,0 +1,25 @@
+{
+  "name": "CUSTOMER",
+  "type": "sql",
+  "code": "SELECT FIRST_NAME FROM CUSTOMER LIMIT 10",
+  "sessionProvider": "CRM_DB",
+  "serializerSettings": [
+    {
+      "set": "nice",
+      "value": "true"
+    }
+  ],
+  "one": true,
+  "children": [
+    {
+      "name": "first_name",
+      "type": "variable",
+      "code": "first_name"
+    }
+  ],
+  "params": [],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

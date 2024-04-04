@@ -1,0 +1,67 @@
+{
+  "name": "get Random Numbers",
+  "type": "function",
+  "code": "var x = Math.floor(Math.random() * Math.PI); \nvar y = Math.floor(Math.random() * Math.floor(3)); \n",
+  "serializerSettings": [
+    {
+      "set": "nice",
+      "value": "true"
+    }
+  ],
+  "children": [
+    {
+      "name": "condition node",
+      "type": "condition",
+      "code": "x>y",
+      "children": [
+        {
+          "name": "TRUE",
+          "children": [
+            {
+              "name": "group A",
+              "type": "delegate",
+              "children": [
+                {
+                  "name": "result",
+                  "type": "string",
+                  "code": "${x} is bigger than ${y}"
+                },
+                {
+                  "name": "Node A",
+                  "type": "string",
+                  "code": "Node within the TRUE group."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "FALSE",
+          "children": [
+            {
+              "name": "Group B",
+              "type": "delegate",
+              "children": [
+                {
+                  "name": "result",
+                  "type": "string",
+                  "code": "${y} is bigger than ${x}"
+                },
+                {
+                  "name": "Node B",
+                  "type": "string",
+                  "code": "Node within the FALSE group."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "params": [],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

@@ -1,0 +1,45 @@
+{
+  "name": "Root",
+  "type": "function",
+  "code": "var x = Math.random() * Math.PI; ",
+  "serializerSettings": [
+    {
+      "set": "nice",
+      "value": "true"
+    }
+  ],
+  "children": [
+    {
+      "name": "No Number Format ",
+      "type": "string",
+      "code": "${x}"
+    },
+    {
+      "name": "Number Format ###.##",
+      "type": "string",
+      "code": "${x}",
+      "serializerSettings": [
+        {
+          "set": "numberFormat",
+          "value": "###.##"
+        }
+      ]
+    },
+    {
+      "name": "Number Format ###.###%",
+      "type": "string",
+      "code": "${x}",
+      "serializerSettings": [
+        {
+          "set": "numberFormat",
+          "value": "###.###%"
+        }
+      ]
+    }
+  ],
+  "params": [],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

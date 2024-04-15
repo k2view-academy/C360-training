@@ -119,8 +119,24 @@ contract_ref_id bigint,
 
 ALTER TABLE public.contract_offer_mapping OWNER TO "BILLING_USER";
 
--- Completed on 2022-12-08 17:41:58
+
+-- Create the subscription_types table
+CREATE TABLE IF NOT EXISTS public.subscription_types (
+    type_id serial PRIMARY KEY,
+    type_name varchar(100) NOT NULL,
+    type_description text
+);
+
+-- Insert data into the subscription_types table
+INSERT INTO public.subscription_types (type_name, type_description) VALUES 
+    ('Individual', 'Subscription tailored for single users, offering personalized benefits.'),
+    ('Family', 'Subscription ideal for multiple family members, enabling shared access.'),
+    ('Organization', 'Designed for businesses, granting access to multiple members within the same organization.'),
+    ('Student', 'Subscription featuring special rates exclusively for students enrolled in educational institutions.');
+
+ALTER TABLE public.subscription_types OWNER TO "BILLING_USER";
+
 --
--- PostgreSQL database dump complete
+-- PostgreSQL database dump
 --
 

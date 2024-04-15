@@ -136,5 +136,7 @@ INSERT INTO public.subscription_types (type_name, type_description) VALUES
 
 ALTER TABLE public.subscription_types OWNER TO "BILLING_USER";
 
+--
 -- PostgreSQL database dump
+--
 

@@ -1,0 +1,47 @@
+{
+  "name": "CRM_ACTIVITIES",
+  "type": "sql",
+  "code": "select * from public.activity limit 2",
+  "sessionProvider": "CRM_DB",
+  "serializerSettings": [
+    {
+      "set": "nice",
+      "value": "true"
+    }
+  ],
+  "children": [
+    {
+      "name": "activity_id",
+      "type": "variable",
+      "code": "activity_id"
+    },
+    {
+      "name": "activity_date",
+      "type": "variable",
+      "code": "activity_date"
+    },
+    {
+      "name": "formatted_activity_date",
+      "type": "variable",
+      "code": "activity_date",
+      "serializerSettings": [
+        {
+          "set": "dateTimeFormat",
+          "value": "RFC_1123_DATE_TIME"
+        }
+      ]
+    }
+  ],
+  "params": [
+    {
+      "name": "customer_id",
+      "dataType": "String",
+      "description": "",
+      "mandatory": false
+    }
+  ],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

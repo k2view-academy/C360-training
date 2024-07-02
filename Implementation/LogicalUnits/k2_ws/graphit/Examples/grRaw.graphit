@@ -1,0 +1,25 @@
+{
+  "name": "Root",
+  "type": "raw",
+  "code": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>",
+  "children": [
+    {
+      "name": "CRM_DB ",
+      "type": "sql",
+      "code": "Select FIRST_NAME\nFrom CUSTOMER limit 5",
+      "sessionProvider": "CRM_DB",
+      "children": [
+        {
+          "name": "FIRST_NAME",
+          "type": "variable",
+          "code": "FIRST_NAME"
+        }
+      ]
+    }
+  ],
+  "params": [],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

@@ -1,0 +1,76 @@
+{
+  "name": "Root",
+  "type": "sql",
+  "code": "get Customer.${customer_id}",
+  "serializerSettings": [
+    {
+      "set": "nice",
+      "value": "true"
+    }
+  ],
+  "children": [
+    {
+      "name": "CONTRACT_DATA",
+      "type": "sql",
+      "code": "select * from Customer.CONTRACT",
+      "serializerSettings": [
+        {
+          "set": "csvHeader",
+          "value": "false"
+        },
+        {
+          "set": "csvCol",
+          "value": "\\t"
+        },
+        {
+          "set": "csvRow",
+          "value": "\\t"
+        }
+      ],
+      "children": [
+        {
+          "name": "CUSTOMER_ID",
+          "type": "variable",
+          "code": "CUSTOMER_ID"
+        },
+        {
+          "name": "CONTRACT_ID",
+          "type": "variable",
+          "code": "CONTRACT_ID"
+        },
+        {
+          "name": "CONTRACT_REF_ID",
+          "type": "variable",
+          "code": "CONTRACT_REF_ID"
+        },
+        {
+          "name": "ASSOCIATED_LINE",
+          "type": "variable",
+          "code": "ASSOCIATED_LINE"
+        },
+        {
+          "name": "CONTRACT_DESCRIPTION",
+          "type": "variable",
+          "code": "CONTRACT_DESCRIPTION"
+        },
+        {
+          "name": "ASSOCIATED_LINE_FMT",
+          "type": "variable",
+          "code": "ASSOCIATED_LINE_FMT"
+        }
+      ]
+    }
+  ],
+  "params": [
+    {
+      "name": "customer_id",
+      "dataType": "String",
+      "description": "The Customer ID",
+      "mandatory": true
+    }
+  ],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

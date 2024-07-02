@@ -1,0 +1,39 @@
+{
+  "name": "Root",
+  "children": [
+    {
+      "name": "BILLING_DB",
+      "type": "sql",
+      "code": "Select SUBSCRIBER_ID, FIRST_NAME, LAST_NAME\nFrom SUBSCRIBER limit 10",
+      "sessionProvider": "BILLING_DB",
+      "serializerSettings": [
+        {
+          "set": "nice",
+          "value": "true"
+        }
+      ],
+      "children": [
+        {
+          "name": "SUBSCRIBER_ID",
+          "type": "variable",
+          "code": "SUBSCRIBER_ID"
+        },
+        {
+          "name": "FIRST_NAME",
+          "type": "variable",
+          "code": "FIRST_NAME"
+        },
+        {
+          "name": "LAST_NAME",
+          "type": "variable",
+          "code": "LAST_NAME"
+        }
+      ]
+    }
+  ],
+  "params": [],
+  "exposeAsEndpoint": true,
+  "path": "",
+  "requireAuth": true,
+  "additionalPermissions": []
+}

@@ -239,40 +239,6 @@
                                 ],
                                 "outputs": []
                             }
-                        },
-                        {
-                            "name": "Create TAR CRM",
-                            "actorType": {
-                                "parentType": "DbCommand",
-                                "inputs": [
-                                    {
-                                        "name": "interface",
-                                        "const": "POSTGRESQL_ADMIN"
-                                    },
-                                    {
-                                        "name": "sql",
-                                        "const": "CREATE DATABASE \"TAR_CRM_DB\" WITH TEMPLATE = template0 ENCODING = 'UTF8' CONNECTION LIMIT = -1 OWNER =\"TAR_CRM_USER\";"
-                                    }
-                                ],
-                                "outputs": []
-                            }
-                        },
-                        {
-                            "name": "Create TAR Billing",
-                            "actorType": {
-                                "parentType": "DbCommand",
-                                "inputs": [
-                                    {
-                                        "name": "interface",
-                                        "const": "POSTGRESQL_ADMIN"
-                                    },
-                                    {
-                                        "name": "sql",
-                                        "const": "CREATE DATABASE \"TAR_BILLING_DB\" WITH TEMPLATE = template0 ENCODING = 'UTF8' CONNECTION LIMIT = -1 OWNER =\"TAR_BILLING_USER\";"
-                                    }
-                                ],
-                                "outputs": []
-                            }
                         }
                     ]
                 }

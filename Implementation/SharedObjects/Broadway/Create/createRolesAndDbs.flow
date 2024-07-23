@@ -6,16 +6,6 @@
         {
             "stages": [
                 {
-                    "name": "Start",
-                    "dependsOnList": [],
-                    "isLast": 0,
-                    "actors": []
-                }
-            ]
-        },
-        {
-            "stages": [
-                {
                     "name": "Test Connection",
                     "dependsOnList": [],
                     "isLast": 0,
@@ -133,35 +123,7 @@
                                         "const": "loadFromLUResource"
                                     },
                                     {
-                                        "const": "DEMO/roles.sql",
-                                        "name": "path",
-                                        "schema": {
-                                            "type": "string"
-                                        },
-                                        "mandatory": false
-                                    }
-                                ],
-                                "outputs": [
-                                    {
-                                        "name": "result",
-                                        "schema": {
-                                            "type": "blob"
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "name": "Get  SQL Resource File To Create BILLING DB Tables and Functions",
-                            "actorType": {
-                                "parentType": "LuFunction",
-                                "inputs": [
-                                    {
-                                        "name": "functionName",
-                                        "const": "loadFromLUResource"
-                                    },
-                                    {
-                                        "const": "DEMO/dbs.sql",
+                                        "const": "TDM/DEMO/roles.sql",
                                         "name": "path",
                                         "schema": {
                                             "type": "string"
@@ -232,9 +194,20 @@
                                 ],
                                 "outputs": []
                             }
-                        },
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "stages": [
+                {
+                    "name": "Create Databases",
+                    "dependsOnList": [],
+                    "isLast": 0,
+                    "actors": [
                         {
-                            "name": "Create DBS",
+                            "name": "Create CRM",
                             "actorType": {
                                 "parentType": "DbCommand",
                                 "inputs": [
@@ -244,7 +217,58 @@
                                     },
                                     {
                                         "name": "sql",
-                                        "const": null
+                                        "const": "CREATE DATABASE \"CRM_DB\" WITH TEMPLATE = template0 ENCODING = 'UTF8' CONNECTION LIMIT = -1 OWNER =\"CRM_USER\";"
+                                    }
+                                ],
+                                "outputs": []
+                            }
+                        },
+                        {
+                            "name": "Create Billing",
+                            "actorType": {
+                                "parentType": "DbCommand",
+                                "inputs": [
+                                    {
+                                        "name": "interface",
+                                        "const": "POSTGRESQL_ADMIN"
+                                    },
+                                    {
+                                        "name": "sql",
+                                        "const": "CREATE DATABASE \"BILLING_DB\" WITH TEMPLATE = template0 ENCODING = 'UTF8' CONNECTION LIMIT = -1 OWNER =\"BILLING_USER\";"
+                                    }
+                                ],
+                                "outputs": []
+                            }
+                        },
+                        {
+                            "name": "Create TAR CRM",
+                            "actorType": {
+                                "parentType": "DbCommand",
+                                "inputs": [
+                                    {
+                                        "name": "interface",
+                                        "const": "POSTGRESQL_ADMIN"
+                                    },
+                                    {
+                                        "name": "sql",
+                                        "const": "CREATE DATABASE \"TAR_CRM_DB\" WITH TEMPLATE = template0 ENCODING = 'UTF8' CONNECTION LIMIT = -1 OWNER =\"TAR_CRM_USER\";"
+                                    }
+                                ],
+                                "outputs": []
+                            }
+                        },
+                        {
+                            "name": "Create TAR Billing",
+                            "actorType": {
+                                "parentType": "DbCommand",
+                                "inputs": [
+                                    {
+                                        "name": "interface",
+                                        "const": "POSTGRESQL_ADMIN"
+                                    },
+                                    {
+                                        "name": "sql",
+                                        "const": "CREATE DATABASE \"TAR_BILLING_DB\" WITH TEMPLATE = template0 ENCODING = 'UTF8' CONNECTION LIMIT = -1 OWNER =\"TAR_BILLING_USER\";"
                                     }
                                 ],
                                 "outputs": []
@@ -289,16 +313,6 @@
             },
             "rightPort": {
                 "actor": "Create ROLES",
-                "name": "sql"
-            }
-        },
-        {
-            "leftPort": {
-                "actor": "Get  SQL Resource File To Create BILLING DB Tables and Functions",
-                "name": "result"
-            },
-            "rightPort": {
-                "actor": "Create DBS",
                 "name": "sql"
             }
         }

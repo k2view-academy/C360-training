@@ -1,306 +1,109 @@
-{
-    "tags": [
-        "Create"
-    ],
-    "levels": [
-        {
-            "stages": [
-                {
-                    "name": "Start",
-                    "dependsOnList": [],
-                    "isLast": 0,
-                    "actors": []
-                }
-            ]
-        },
-        {
-            "stages": [
-                {
-                    "name": "Test Connection",
-                    "dependsOnList": [],
-                    "isLast": 0,
-                    "actors": [
-                        {
-                            "name": "Check If PostgreSQL Admin Interface  Connection",
-                            "actorType": {
-                                "parentType": "DbCommand",
-                                "inputs": [
-                                    {
-                                        "name": "interface",
-                                        "const": "fabric"
-                                    },
-                                    {
-                                        "name": "sql",
-                                        "const": "test_connection interface=${POSTGRESQL_ADMIN}"
-                                    },
-                                    {
-                                        "const": "POSTGRESQL_ADMIN",
-                                        "name": "POSTGRESQL_ADMIN",
-                                        "schema": {
-                                            "type": "string"
-                                        },
-                                        "mandatory": false
-                                    }
-                                ],
-                                "outputs": [
-                                    {
-                                        "name": "result",
-                                        "schema": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "interface": {
-                                                        "type": "string"
-                                                    },
-                                                    "type": {
-                                                        "type": "string"
-                                                    },
-                                                    "environment": {
-                                                        "type": "string"
-                                                    },
-                                                    "active": {
-                                                        "type": "boolean"
-                                                    },
-                                                    "passed": {
-                                                        "type": "boolean"
-                                                    },
-                                                    "error_message": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "stages": [
-                {
-                    "name": "Check Admin Interface",
-                    "dependsOnList": [],
-                    "isLast": 0,
-                    "actors": [
-                        {
-                            "name": "Check If Admin Interface is Active",
-                            "actorType": {
-                                "parentType": "assertTrue",
-                                "inputs": [
-                                    {
-                                        "name": "message",
-                                        "const": "The Admin interface of Postgres is not active, cannot create the TDM DB"
-                                    }
-                                ],
-                                "outputs": []
-                            }
-                        },
-                        {
-                            "name": "Check If Admin Interface Is Valid",
-                            "actorType": {
-                                "parentType": "assertTrue",
-                                "inputs": [
-                                    {
-                                        "name": "message",
-                                        "const": "The Admin interface of Postgres is not valid, cannot create the TDM DB"
-                                    }
-                                ],
-                                "outputs": []
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "stages": [
-                {
-                    "name": "Create Roles & Databases",
-                    "dependsOnList": [],
-                    "isLast": 0,
-                    "actors": [
-                        {
-                            "name": "Get  SQL Resource File To Create CRM DB Tables and Functions",
-                            "actorType": {
-                                "parentType": "LuFunction",
-                                "inputs": [
-                                    {
-                                        "name": "functionName",
-                                        "const": "loadFromLUResource"
-                                    },
-                                    {
-                                        "const": "DEMO/roles.sql",
-                                        "name": "path",
-                                        "schema": {
-                                            "type": "string"
-                                        },
-                                        "mandatory": false
-                                    }
-                                ],
-                                "outputs": [
-                                    {
-                                        "name": "result",
-                                        "schema": {
-                                            "type": "blob"
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "name": "Get  SQL Resource File To Create BILLING DB Tables and Functions",
-                            "actorType": {
-                                "parentType": "LuFunction",
-                                "inputs": [
-                                    {
-                                        "name": "functionName",
-                                        "const": "loadFromLUResource"
-                                    },
-                                    {
-                                        "const": "DEMO/dbs.sql",
-                                        "name": "path",
-                                        "schema": {
-                                            "type": "string"
-                                        },
-                                        "mandatory": false
-                                    }
-                                ],
-                                "outputs": [
-                                    {
-                                        "name": "result",
-                                        "schema": {
-                                            "type": "blob"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "stages": [
-                {
-                    "name": "Execute Create Sql Statements For Roles&Dbs",
-                    "dependsOnList": [],
-                    "isLast": 0,
-                    "actors": [
-                        {
-                            "name": "DB Error Handler",
-                            "onError": "result",
-                            "actorType": {
-                                "parentType": "ErrorHandler",
-                                "inputs": [
-                                    {
-                                        "name": "config",
-                                        "const": [
-                                            {
-                                                "exceptionKey": "com.k2view.fabric.common.io.basic.exception.StandardSqlException",
-                                                "conditions": {
-                                                    "standardType": "UNIQUE_CONSTRAINT"
-                                                },
-                                                "actions": {
-                                                    "suppress": false,
-                                                    "log": true,
-                                                    "flowName": ""
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ],
-                                "outputs": []
-                            }
-                        },
-                        {
-                            "name": "Create ROLES",
-                            "actorType": {
-                                "parentType": "DbCommand",
-                                "inputs": [
-                                    {
-                                        "name": "interface",
-                                        "const": "POSTGRESQL_ADMIN"
-                                    },
-                                    {
-                                        "name": "sql",
-                                        "const": null
-                                    }
-                                ],
-                                "outputs": []
-                            }
-                        },
-                        {
-                            "name": "Create DBS",
-                            "actorType": {
-                                "parentType": "DbCommand",
-                                "inputs": [
-                                    {
-                                        "name": "interface",
-                                        "const": "POSTGRESQL_ADMIN"
-                                    },
-                                    {
-                                        "name": "sql",
-                                        "const": null
-                                    }
-                                ],
-                                "outputs": []
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-    ],
-    "connections": [
-        {
-            "leftPort": {
-                "actor": "Check If PostgreSQL Admin Interface  Connection",
-                "name": "result"
-            },
-            "rightPort": {
-                "actor": "Check If Admin Interface is Active",
-                "name": "condition"
-            },
-            "path": [
-                "active"
-            ]
-        },
-        {
-            "leftPort": {
-                "actor": "Check If PostgreSQL Admin Interface  Connection",
-                "name": "result"
-            },
-            "rightPort": {
-                "actor": "Check If Admin Interface Is Valid",
-                "name": "condition"
-            },
-            "path": [
-                "passed"
-            ]
-        },
-        {
-            "leftPort": {
-                "actor": "Get  SQL Resource File To Create CRM DB Tables and Functions",
-                "name": "result"
-            },
-            "rightPort": {
-                "actor": "Create ROLES",
-                "name": "sql"
-            }
-        },
-        {
-            "leftPort": {
-                "actor": "Get  SQL Resource File To Create BILLING DB Tables and Functions",
-                "name": "result"
-            },
-            "rightPort": {
-                "actor": "Create DBS",
-                "name": "sql"
-            }
-        }
-    ]
-}
+tags: Create
+stages:
+  Test Connection:
+    actors:
+      Check If PostgreSQL Admin Interface  Connection:
+        parent: DbCommand
+        in:
+          interface:
+            const: fabric
+          sql:
+            const: test_connection interface=${POSTGRESQL_ADMIN}
+          POSTGRESQL_ADMIN:
+            const: POSTGRESQL_ADMIN
+            schema: string
+            mandatory: false
+        out:
+          result:
+            schema: '#ref'
+  Check Admin Interface:
+    actors:
+      Check If Admin Interface is Active:
+        parent: assertTrue
+        in:
+          message:
+            const: The Admin interface of Postgres is not active, cannot create the
+              TDM DB
+          condition:
+            link: Check If PostgreSQL Admin Interface  Connection/result/active
+      Check If Admin Interface Is Valid:
+        parent: assertTrue
+        in:
+          message:
+            const: The Admin interface of Postgres is not valid, cannot create the
+              TDM DB
+          condition:
+            link: Check If PostgreSQL Admin Interface  Connection/result/passed
+  Create Roles & Databases:
+    actors:
+      Get  SQL Resource File To Create CRM DB Tables and Functions:
+        parent: LuFunction
+        in:
+          functionName:
+            const: loadFromLUResource
+          path:
+            const: DEMO/roles.sql
+            schema: string
+            mandatory: false
+        out:
+          result:
+            schema: blob
+  Execute Create Sql Statements For Roles&Dbs:
+    actors:
+      DB Error Handler:
+        parent: ErrorHandler
+        error: result
+        in:
+          config:
+            const:
+            - exceptionKey: com.k2view.fabric.common.io.basic.exception.StandardSqlException
+              conditions:
+                standardType: UNIQUE_CONSTRAINT
+              actions:
+                suppress: false
+                log: true
+                flowName: ''
+      Create ROLES:
+        parent: DbCommand
+        in:
+          interface:
+            const: POSTGRESQL_ADMIN
+          sql:
+            const: null
+            link: Get  SQL Resource File To Create CRM DB Tables and Functions/result
+  Create Databases:
+    actors:
+      Create CRM:
+        parent: DbCommand
+        in:
+          interface:
+            const: POSTGRESQL_ADMIN
+          sql:
+            const: CREATE DATABASE "CRM_DB" WITH TEMPLATE = template0 ENCODING = 'UTF8'
+              CONNECTION LIMIT = -1 OWNER ="CRM_USER";
+      Create Billing:
+        parent: DbCommand
+        in:
+          interface:
+            const: POSTGRESQL_ADMIN
+          sql:
+            const: CREATE DATABASE "BILLING_DB" WITH TEMPLATE = template0 ENCODING
+              = 'UTF8' CONNECTION LIMIT = -1 OWNER ="BILLING_USER";
+schemas:
+  Check If PostgreSQL Admin Interface  Connection.out.result:
+    type: array
+    items:
+      type: object
+      properties:
+        interface:
+          type: string
+        type:
+          type: string
+        environment:
+          type: string
+        active:
+          type: boolean
+        passed:
+          type: boolean
+        error_message:
+          type: string

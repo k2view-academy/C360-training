@@ -14,7 +14,7 @@
     <DataSource>postgres-service</DataSource>
     <DataBase>CRM_DB</DataBase>
     <UserId>CRM_USER</UserId>
-    <Password>~encs2~ST7HasNUn/Mdmna/Z6rgQuA3yW6J41jdD4nXG++uivKkItHMFKNZNQ==</Password>
+    <Password>~encs2~IuTcmjLDMJNm3/JZs6PD8Ok2Wr6bUjVUUgLBMx3Hf3/HlZBGa6k+KA==</Password>
     <SchemaFilter></SchemaFilter>
     <CommandList></CommandList>
 </DBConn>

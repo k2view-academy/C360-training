@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DBConn xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="DBConnGenericAdoJdbc" name="STAFF_CSV_DB" type="genericdb" version="8.0.0">
+    <JdbcDriverName>csv</JdbcDriverName>
+    <Active>true</Active>
+    <ConnectionProperties></ConnectionProperties>
+    <ConnectionStringServerSide>jdbc:relique:csv:/opt/apps/fabric/workspace/project/project-resources/CSV/Staff?separator=,&amp;fileExtension=.csv</ConnectionStringServerSide>
+    <PortNum></PortNum>
+    <IsCustomConnectionStringServerSide>false</IsCustomConnectionStringServerSide>
+    <MinConnectionsNumber>0</MinConnectionsNumber>
+    <MaxConnectionsNumber>60</MaxConnectionsNumber>
+    <UseSelectAsteriskInAutoCreatedQueries>true</UseSelectAsteriskInAutoCreatedQueries>
+    <AutomaticMetadataLoading>false</AutomaticMetadataLoading>
+    <OfflineMode>true</OfflineMode>
+    <DataBase>/opt/apps/fabric/workspace/project/project-resources/CSV/Staff</DataBase>
+    <DataSource></DataSource>
+    <UserId></UserId>
+    <Password></Password>
+    <SchemaFilter></SchemaFilter>
+    <CommandList></CommandList>
+</DBConn>

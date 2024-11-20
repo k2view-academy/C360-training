@@ -1,0 +1,141 @@
+stages:
+  Input:
+    actors:
+      PopulationArgs:
+        parent: PopulationArgs
+        readonly: true
+        in:
+          subscriber_id:
+            external: subscriber_id
+            schema: any
+            mandatory: false
+          msisdn:
+            external: msisdn
+            schema: any
+            mandatory: false
+          imsi:
+            external: imsi
+            schema: any
+            mandatory: false
+          sim:
+            external: sim
+            schema: any
+            mandatory: false
+          first_name:
+            external: first_name
+            schema: any
+            mandatory: false
+          last_name:
+            external: last_name
+            schema: any
+            mandatory: false
+          subscriber_type:
+            external: subscriber_type
+            schema: any
+            mandatory: false
+          vip_status:
+            external: vip_status
+            schema: any
+            mandatory: false
+      SyncDeleteMode:
+        parent: SyncDeleteMode
+        in:
+          interface:
+            schema: any
+          table:
+            const: null
+            external: table
+  Source:
+    actors:
+      Query:
+        parent: SourceDbQuery
+        in:
+          interface:
+            const: BILLING_DB
+          sql:
+            const: select * from public.subscriber
+          parent_rows:
+            link: PopulationArgs/parent_rows
+        out:
+          result:
+            schema: '#ref'
+  Stage 1: {
+    }
+  LU Table:
+    last: 1
+    actors:
+      subscriber:
+        parent: DbLoad
+        in:
+          interface:
+            const: fabric
+          schema:
+            const: null
+            external: schema
+          table:
+            const: null
+            external: table
+          fields:
+            const:
+            - subscriber_id
+            - msisdn
+            - imsi
+            - sim
+            - first_name
+            - last_name
+            - subscriber_type
+            - vip_status
+          keys:
+            const:
+          dialect:
+            const: sqlite
+          subscriber_id:
+            schema: any
+          msisdn:
+            schema: any
+          imsi:
+            schema: any
+          sim:
+            schema: any
+          first_name:
+            schema: any
+          last_name:
+            schema: any
+          subscriber_type:
+            schema: any
+          vip_status:
+            schema: any
+          params:
+            link:
+              path: Query/result
+              iterate: Iterate
+  Post Load: {
+    }
+schemas:
+  Query.out.result:
+    type: object
+    properties:
+      subscriber_id:
+        type: {
+          }
+      msisdn:
+        type: {
+          }
+      imsi:
+        type: {
+          }
+      sim:
+        type: {
+          }
+      first_name:
+        type: {
+          }
+      last_name:
+        type: {
+          }
+      subscriber_type:
+        type: {
+          }
+      vip_status:
+        type: {
+          }

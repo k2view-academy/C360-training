@@ -1,0 +1,16 @@
+[
+    {
+        "id": "k2view.csv-jdbc-connector",
+        "version": "1.0.0",
+        "artifacts": [
+            {
+                "path": "/Implementation/SharedObjects/InterfaceTypes/DatabaseDrivers/CSV.k2DriverConf.xml",
+                "sha256": "14c78cca94bd958e1dfe95dda95f5cc6eedfd91b22ccd1bc7138372fa16c52ae"
+            },
+            {
+                "path": "/lib/CSV/csvjdbc-1.0.42.jar",
+                "sha256": "32e03e7ecbf543badef881a876cd744d72b1d5598f6f8823f3f80521bd7eec83"
+            }
+        ]
+    }
+]

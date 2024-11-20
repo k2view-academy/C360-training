@@ -14,7 +14,7 @@
     <DataSource>postgres-service</DataSource>
     <DataBase>BILLING_DB</DataBase>
     <UserId>BILLING_USER</UserId>
-    <Password>~encs2~FolqnFFI4kliXm5ybGNzI2CgGIoWD6Ib4jc7KqN5bJA2XU55OrVjT7DJJRw=</Password>
+    <Password>~encs2~Phos+7jd5qDFrUqXHFlifCUbQnSUSuf84jYSiWUgarNnSMFwaKPahBmI3FE=</Password>
     <SchemaFilter></SchemaFilter>
     <CommandList></CommandList>
 </DBConn>

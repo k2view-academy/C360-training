@@ -1,0 +1,131 @@
+stages:
+  Input:
+    actors:
+      PopulationArgs:
+        parent: PopulationArgs
+        readonly: true
+        in:
+          subscriber_id:
+            external: subscriber_id
+            schema: any
+            mandatory: false
+          invoice_id:
+            external: invoice_id
+            schema: any
+            mandatory: false
+          issued_date:
+            external: issued_date
+            schema: any
+            mandatory: false
+          due_date:
+            external: due_date
+            schema: any
+            mandatory: false
+          status:
+            external: status
+            schema: any
+            mandatory: false
+          balance:
+            external: balance
+            schema: any
+            mandatory: false
+          invoice_image:
+            external: invoice_image
+            schema: any
+            mandatory: false
+      SyncDeleteMode:
+        parent: SyncDeleteMode
+        in:
+          interface:
+            schema: any
+          table:
+            const: null
+            external: table
+  Source:
+    actors:
+      Query:
+        parent: SourceDbQuery
+        in:
+          interface:
+            const: BILLING_DB
+          sql:
+            const: select * from public.invoice
+          parent_rows:
+            link: PopulationArgs/parent_rows
+        out:
+          result:
+            schema: '#ref'
+  Stage 1: {
+    }
+  LU Table:
+    last: 1
+    actors:
+      invoice:
+        parent: DbLoad
+        in:
+          interface:
+            const: fabric
+          schema:
+            const: null
+            external: schema
+          table:
+            const: null
+            external: table
+          fields:
+            const:
+            - subscriber_id
+            - invoice_id
+            - issued_date
+            - due_date
+            - status
+            - balance
+            - invoice_image
+          keys:
+            const:
+          dialect:
+            const: sqlite
+          subscriber_id:
+            schema: any
+          invoice_id:
+            schema: any
+          issued_date:
+            schema: any
+          due_date:
+            schema: any
+          status:
+            schema: any
+          balance:
+            schema: any
+          invoice_image:
+            schema: any
+          params:
+            link:
+              path: Query/result
+              iterate: Iterate
+  Post Load: {
+    }
+schemas:
+  Query.out.result:
+    type: object
+    properties:
+      subscriber_id:
+        type: {
+          }
+      invoice_id:
+        type: {
+          }
+      issued_date:
+        type: {
+          }
+      due_date:
+        type: {
+          }
+      status:
+        type: {
+          }
+      balance:
+        type: {
+          }
+      invoice_image:
+        type: {
+          }

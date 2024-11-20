@@ -1,0 +1,101 @@
+stages:
+  Stage 1:
+    actors:
+      DbCommand1:
+        parent: DbCommand
+        in:
+          interface:
+            const: CRM_DB
+          sql:
+            const: "select Count(*) as NUMBER_OF_CASES, CASES.status\r\nfrom CASES\r\
+              \nGROUP BY CASES.status"
+        out:
+          result:
+            schema: '#ref'
+  Stage 2:
+    actors:
+      CsvBuilder1:
+        parent: CsvBuilder
+        in:
+          maps:
+            link:
+              path: DbCommand1/result
+              iterate: Iterate
+      Count1:
+        parent: Count
+        out:
+          value:
+            schema: integer
+  Stage 3:
+    last: 1
+    actors:
+      FileWrite1:
+        parent: FileWrite
+        in:
+          interface:
+            const: LocalFileSystem
+          path:
+            const: customer_list.csv
+          ioBufferSize:
+            const: 0
+          stream:
+            link: CsvBuilder1/csv
+  Stage 4:
+    dependsOn: Stage 3
+    actors:
+      GreaterThanEquals1:
+        parent: GreaterThanEquals
+        condition: result
+        height: 83
+        in:
+          b:
+            const: 3
+          a:
+            link: Count1/value
+    split: '--------------------'
+  Stage 5:
+    else: true
+    dependsOn: Stage 3
+    actors:
+      Const1:
+        parent: Const
+        in:
+          value:
+            const: Error - there are not enough records in the list
+            schema: string
+        out:
+          value:
+            schema: string
+  Stage 6:
+    dependsOn: Stage 4
+    actors:
+      Logger1:
+        parent: Logger
+        in:
+          message:
+            const: There are ${0} records in the list
+          level:
+            const: info
+          params:
+            link: Count1/value
+    split: '--------------------'
+  Stage 7:
+    dependsOn: Stage 5
+    actors:
+      Logger2:
+        parent: Logger
+        in:
+          message:
+            link: Const1/value
+  Stage 8: {
+    }
+schemas:
+  DbCommand1.out.result:
+    type: array
+    items:
+      type: object
+      properties:
+        number_of_cases:
+          type: integer
+        status:
+          type: string

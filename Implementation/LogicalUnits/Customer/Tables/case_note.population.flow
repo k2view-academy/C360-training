@@ -1,0 +1,101 @@
+stages:
+  Input:
+    actors:
+      PopulationArgs:
+        parent: PopulationArgs
+        readonly: true
+        in:
+          case_id:
+            external: case_id
+            schema: any
+            mandatory: false
+          note_id:
+            external: note_id
+            schema: any
+            mandatory: false
+          note_date:
+            external: note_date
+            schema: any
+            mandatory: false
+          note_text:
+            external: note_text
+            schema: any
+            mandatory: false
+      SyncDeleteMode:
+        parent: SyncDeleteMode
+        in:
+          interface:
+            schema: any
+          table:
+            const: null
+            external: table
+  Source:
+    actors:
+      Query:
+        parent: SourceDbQuery
+        in:
+          interface:
+            const: CRM_DB
+          sql:
+            const: select * from public.case_note
+          parent_rows:
+            link: PopulationArgs/parent_rows
+        out:
+          result:
+            schema: '#ref'
+  Stage 1: {
+    }
+  LU Table:
+    last: 1
+    actors:
+      case_note:
+        parent: DbLoad
+        in:
+          interface:
+            const: fabric
+          schema:
+            const: null
+            external: schema
+          table:
+            const: null
+            external: table
+          fields:
+            const:
+            - case_id
+            - note_id
+            - note_date
+            - note_text
+          keys:
+            const:
+          dialect:
+            const: sqlite
+          case_id:
+            schema: any
+          note_id:
+            schema: any
+          note_date:
+            schema: any
+          note_text:
+            schema: any
+          params:
+            link:
+              path: Query/result
+              iterate: Iterate
+  Post Load: {
+    }
+schemas:
+  Query.out.result:
+    type: object
+    properties:
+      case_id:
+        type: {
+          }
+      note_id:
+        type: {
+          }
+      note_date:
+        type: {
+          }
+      note_text:
+        type: {
+          }

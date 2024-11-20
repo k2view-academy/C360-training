@@ -1,0 +1,45 @@
+stages:
+  Stage 1:
+    actors:
+      Const1:
+        parent: Const
+        in:
+          value:
+            const: This is a test flow
+            schema: string
+        out:
+          value:
+            schema: string
+      Const2:
+        parent: Const
+        in:
+          value:
+            const: data flow
+            schema: string
+        out:
+          value:
+            schema: string
+  Stage 2:
+    actors:
+      StringBuild2:
+        parent: StringBuild
+        in:
+          delimiter:
+            const: '~'
+          input:
+            link:
+            - path: Const1/value
+              pos: 0
+            - path: Const2/value
+              pos: 1
+  Stage 3:
+    actors:
+      Const3:
+        parent: Const
+        in:
+          value:
+            const: null
+            link: StringBuild2/string
+        out:
+          value:
+            schema: string

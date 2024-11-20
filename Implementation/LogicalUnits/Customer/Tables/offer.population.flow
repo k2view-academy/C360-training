@@ -1,0 +1,121 @@
+stages:
+  Input:
+    actors:
+      PopulationArgs:
+        parent: PopulationArgs
+        readonly: true
+        in:
+          subscriber_id:
+            external: subscriber_id
+            schema: any
+            mandatory: false
+          offer_id:
+            external: offer_id
+            schema: any
+            mandatory: false
+          offer_ref_id:
+            external: offer_ref_id
+            schema: any
+            mandatory: false
+          offer_description:
+            external: offer_description
+            schema: any
+            mandatory: false
+          from_date:
+            external: from_date
+            schema: any
+            mandatory: false
+          to_date:
+            external: to_date
+            schema: any
+            mandatory: false
+      SyncDeleteMode:
+        parent: SyncDeleteMode
+        in:
+          interface:
+            schema: any
+          table:
+            const: null
+            external: table
+  Source:
+    actors:
+      Query:
+        parent: SourceDbQuery
+        in:
+          interface:
+            const: BILLING_DB
+          sql:
+            const: select * from public.offer
+          parent_rows:
+            link: PopulationArgs/parent_rows
+        out:
+          result:
+            schema: '#ref'
+  Stage 1: {
+    }
+  LU Table:
+    last: 1
+    actors:
+      offer:
+        parent: DbLoad
+        in:
+          interface:
+            const: fabric
+          schema:
+            const: null
+            external: schema
+          table:
+            const: null
+            external: table
+          fields:
+            const:
+            - subscriber_id
+            - offer_id
+            - offer_ref_id
+            - offer_description
+            - from_date
+            - to_date
+          keys:
+            const:
+          dialect:
+            const: sqlite
+          subscriber_id:
+            schema: any
+          offer_id:
+            schema: any
+          offer_ref_id:
+            schema: any
+          offer_description:
+            schema: any
+          from_date:
+            schema: any
+          to_date:
+            schema: any
+          params:
+            link:
+              path: Query/result
+              iterate: Iterate
+  Post Load: {
+    }
+schemas:
+  Query.out.result:
+    type: object
+    properties:
+      subscriber_id:
+        type: {
+          }
+      offer_id:
+        type: {
+          }
+      offer_ref_id:
+        type: {
+          }
+      offer_description:
+        type: {
+          }
+      from_date:
+        type: {
+          }
+      to_date:
+        type: {
+          }

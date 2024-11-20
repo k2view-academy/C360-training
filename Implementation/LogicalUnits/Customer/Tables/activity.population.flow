@@ -1,0 +1,101 @@
+stages:
+  Input:
+    actors:
+      PopulationArgs:
+        parent: PopulationArgs
+        readonly: true
+        in:
+          customer_id:
+            external: customer_id
+            schema: any
+            mandatory: false
+          activity_id:
+            external: activity_id
+            schema: any
+            mandatory: false
+          activity_date:
+            external: activity_date
+            schema: any
+            mandatory: false
+          activity_note:
+            external: activity_note
+            schema: any
+            mandatory: false
+      SyncDeleteMode:
+        parent: SyncDeleteMode
+        in:
+          interface:
+            schema: any
+          table:
+            const: null
+            external: table
+  Source:
+    actors:
+      Query:
+        parent: SourceDbQuery
+        in:
+          interface:
+            const: CRM_DB
+          sql:
+            const: select * from public.activity
+          parent_rows:
+            link: PopulationArgs/parent_rows
+        out:
+          result:
+            schema: '#ref'
+  Stage 1: {
+    }
+  LU Table:
+    last: 1
+    actors:
+      activity:
+        parent: DbLoad
+        in:
+          interface:
+            const: fabric
+          schema:
+            const: null
+            external: schema
+          table:
+            const: null
+            external: table
+          fields:
+            const:
+            - customer_id
+            - activity_id
+            - activity_date
+            - activity_note
+          keys:
+            const:
+          dialect:
+            const: sqlite
+          customer_id:
+            schema: any
+          activity_id:
+            schema: any
+          activity_date:
+            schema: any
+          activity_note:
+            schema: any
+          params:
+            link:
+              path: Query/result
+              iterate: Iterate
+  Post Load: {
+    }
+schemas:
+  Query.out.result:
+    type: object
+    properties:
+      customer_id:
+        type: {
+          }
+      activity_id:
+        type: {
+          }
+      activity_date:
+        type: {
+          }
+      activity_note:
+        type: {
+          }

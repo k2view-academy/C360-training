@@ -1,0 +1,602 @@
+tags: Examples
+stages:
+  press the asterisk -->:
+    remark: |-
+      The Green asterisk is a way to read remarks written by the Broadway flow developer.
+
+      Select the asterisk in the main menu to popup all remarks in the flow.
+
+      You can add remarks from the ... context menus.
+  Stage 1:
+    remark: "A flow is built out of stages. The stages are executed one by one from\
+      \ left to right.\nTo run a flow, select the Play option in the main menu. \n\
+      You can put a break point at any stage from its ... context menu or by clicking\
+      \ next to its name.\nYou can run the flow stage by stage by using the Step icon.\n"
+    transactional: false
+  Hello Broadway:
+    remark: "A stage contains Actors. \n\nAn actor is an Object with a function that\
+      \ gets input parameters and returns output parameters. \n\nWhen debugging, you\
+      \ can see the input and  output parameters of each actor.\n"
+    transactional: false
+    actors:
+      Const1:
+        parent: Const
+        in:
+          value:
+            const: Broadway Training
+            schema: string
+        out:
+          value:
+            schema: string
+  Input Arguments:
+    remark: |-
+      Input arguments can get their value from several sources:
+
+      1) A constant value (as can be seen in the previous stage).
+      2) The output of a previous actor.
+      3) An external flow argument
+
+      Select the input method by clicking the actor to open the actor’s Properties Pane and selecting the ... context menu of the input parameter under the inputs section.
+    transactional: false
+    actors:
+      Const2:
+        parent: Const
+        in:
+          value:
+            const: null
+            link: Const1/value
+            schema: string
+        out:
+          value:
+            schema: string
+  strings:
+    remark: |-
+      Broadway contains several actors to deal with string parsing and formatting.
+
+      Checkout the strings.flow example for details on String functions.
+    transactional: false
+    actors:
+      Split1:
+        parent: Split
+        in:
+          delimiter:
+            const: ' '
+          string:
+            link: Const2/value
+  for each:
+    remark: |-
+      Often we have cases where we want to deal with individual elements in a data set.
+      Broadway supports that with the "Iterate" connection type. You can change the line type by selecting the line and changing its “Line Type” value to “Iterate” in the Properties Pane.
+
+      To close the scope of the iteration, select "Iterate Close" from the ... stage context menu.
+
+      Inside the loop we have the StringBuild actor that accumulates the result.
+
+      For more on the subject, checkout the iterate-for-each.flow example.
+    last: 1
+    transactional: false
+    actors:
+      StringBuild1:
+        parent: StringBuild
+        remark: |-
+          An actor can have a state.
+
+          Here we see the StringBuild actor that maintains a state (the string so far) between iterations.
+        in:
+          delimiter:
+            const: '*'
+          input:
+            link:
+              path: Split1/strings
+              iterate: Iterate
+  primitives:
+    remark: |-
+      Broadway supports a closed list of primitive types.
+
+      When an actor expects a certain primitive type, Broadway does its best to convert the instance to the desired type.
+    transactional: false
+    actors:
+      aString:
+        parent: Replace
+        in:
+          search:
+            const: '*'
+          replace:
+            const: ' '
+          string:
+            link: StringBuild1/string
+      anInteger:
+        parent: Const
+        remark: |+
+          Integer is implemented using a signed 64 bit container (Java long).
+
+
+        in:
+          value:
+            const: 42
+            schema: integer
+        out:
+          value:
+            schema: integer
+      aReal:
+        parent: Const
+        remark: "Real is a floating point double precision variable implemented by\
+          \ the Java double type.\nIt can receive edge values such as Infinite and\
+          \ NaN.\n\nCheckout the math.flow example to see it in action along with\
+          \ the many builtin math actors that are included in Broadway. "
+        in:
+          value:
+            const: 3.14
+            schema: number
+        out:
+          value:
+            schema: number
+      aDate:
+        parent: Const
+        remark: "Dates signal a point in time. They are implemented by the java Date\
+          \ class and its derivatives (sql.Timestamp, sql.DateTime, etc).\n\nBroadway\
+          \ has a comprehensive list of builtin actors to deal with dates and time\
+          \ zones.\n \nCheck out the dates.flow example for more."
+        in:
+          value:
+            const: 1623-06-19T23:32
+            schema: date
+        out:
+          value:
+            schema: date
+      aBoolean:
+        parent: Const
+        remark: |-
+          Yes/No, True/False, 0/1.
+
+          All data types have some default conversion  to the boolean type.
+
+          For more, see the logic.flow example.
+        in:
+          value:
+            const: true
+            schema: boolean
+        out:
+          value:
+            schema: boolean
+  splitting the flow:
+    remark: |-
+      You can split the flow and assign a condition to each sub stage.
+      An 'else' stage will run if all other stage conditions returned false.
+
+      The stages in the same row are dependent on the stages before them.
+
+      You can split the stages indefinitely to create a large condition tree. However, it would be a better practice to use an inner flow instead of a large number of splits.
+
+      To see more check out the conditions.flow  example.
+    else: true
+    transactional: false
+    dependsOn: primitives
+    actors:
+      Logger1:
+        parent: Logger
+        remark: 'Use the Logger actor to format and send messages to the log file. '
+        in:
+          message:
+            const: All is well with the world
+          level:
+            const: info
+    split: '--------------------'
+  paradox:
+    transactional: false
+    dependsOn: primitives
+    actors:
+      never:
+        parent: JavaScript
+        condition: result
+        in:
+          script:
+            const: true == !true
+        out:
+          result:
+            schema: boolean
+      Logger2:
+        parent: Logger
+        in:
+          message:
+            const: Universe is broken
+  Dynamic Logic Actors:
+    remark: "Some actors have dynamic logic as one of their inputs. \nFor these actors\
+      \ you can add inputs ports and refer to them in the Actor logic."
+    dependsOn: splitting the flow
+    actors:
+      JavaScript1:
+        parent: JavaScript
+        remark: You can see the JS Actor in action in the javascript.flow
+        in:
+          script:
+            const: |-
+              let gp= input1.split(" ");
+              // The last statement is the return value:
+              ({
+                  data:{
+                      "greeting": gp[0],
+                      "product": gp[1]
+                  }
+              });
+          input1:
+            link: aString/string
+            schema: string
+        out:
+          result:
+            schema: '#ref'
+      StringFormat1:
+        parent: StringFormat
+        remark: StringFormat is a surprisingly powerful actor. Select the "Description"
+          entry from the Actor ... context menu to learn more.
+        in:
+          format:
+            const: ${input1} != ${input2}
+          params:
+            const: ''
+          input1:
+            link: anInteger/value
+            schema: integer
+          input2:
+            link: aReal/value
+            schema: number
+      DbCommand1:
+        parent: DbCommand
+        remark: |
+          This is a simple SQL. You can see more complex usage of the DbCommand actor in the db_commands.flow and db_insert.flow
+        in:
+          interface:
+            const: 'jdbc:sqlite:'
+          sql:
+            const: "SELECT \"Broadway Rocks\" as \ncompliment\nWHERE ${input1}=TRUE"
+          input1:
+            link: aBoolean/value
+            schema: boolean
+        out:
+          result:
+            schema: '#ref'
+    split: '--------------------'
+  Stage 3:
+    dependsOn: paradox
+    actors:
+      Now1:
+        parent: Now
+  Complex data:
+    remark: |-
+      Broadway can work with complex data types (arrays / maps) and enable you to pick data directly from these structures.
+
+      Click the + on the result output parameter of JavaScript1 and DbCommand1 to see the metadata.
+
+      You can also edit the meta data directly on the meta data viewer by clicking the fields
+    transactional: false
+    actors:
+      Concat1:
+        parent: Concat
+        remark: We pass the data map as an input to the Concat actor. Since concat
+          expects an Array, Broadway will automatically pass the map values to the
+          Concat actor
+        in:
+          delimiter:
+            const: '-'
+          elements:
+            link: JavaScript1/result/data
+      StringFormat2:
+        parent: StringFormat
+        remark: Taking this opportunity to build a simple json to showcase a parser
+        in:
+          format:
+            const: '{"${input1}":"${input2}"}'
+          input1:
+            link: JavaScript1/result/data/greeting
+            schema: string
+          input2:
+            link: JavaScript1/result/data/product
+            schema: string
+      Concat2:
+        parent: Concat
+        remark: |-
+          In a situation where an Actor expects an array you can build the array on the fly from discrete  entries.
+
+          To use this mode, click the line to bring the line inspector and toggle the Variable Arguments (varargs) selector.
+        in:
+          delimiter:
+            const: '-'
+          elements:
+            link:
+            - path: JavaScript1/result/data/greeting
+              pos: 0
+            - path: JavaScript1/result/data/product
+              pos: 1
+  Parsers:
+    remark: "Parsers take a string or blob and parse them into a structure.\n\nInput\
+      \ can also be a collection of blobs or strings which is how Broadway represents\
+      \ a data stream.   \n\nCheckout json.flow, csv.flow and lines.flow from more\
+      \ examples as well as the actor documentation (context menu > description)."
+    transactional: false
+    actors:
+      CsvParser1:
+        parent: CsvParser
+        remark: When a header row is present, the CSV actor will return named rows
+          and Broadway's schema discovery engine will analyse them.
+        in:
+          stream:
+            const: |-
+              Greeting,Product
+              Hello,Broadway
+              Goodbye,PHP
+        out:
+          object:
+            schema: '#ref'
+      JsonParser1:
+        parent: JsonParser
+        in:
+          stream:
+            link: StringFormat2/string
+        out:
+          object:
+            schema: '#ref'
+      LinesParser1:
+        parent: LinesParser
+        remark: The const here shows how data can come in different chunks with arbitrary
+          alignment and not confuse our parsers.
+        in:
+          stream:
+            const:
+            - li
+            - |-
+              ne1
+              l
+            - ine2
+      XmlParser1:
+        parent: XmlParser
+        in:
+          stream:
+            const: |-
+              <root>
+                <a>1</a>
+                <b attr="2.5">2</b>
+                <c>3</c>
+              </root>
+            schema: string
+        out:
+          object:
+            schema: '#ref'
+          info:
+            schema: '#ref'
+  more js + external:
+    remark: "Understanding the Broadway API and the JS actor can open up some very\
+      \ powerful options.\n\nCheck out the javascript-advanced.flow for dynamic flowArgs,\
+      \ error handling and more.\n\nWhen marking an output parameter external, it\
+      \ becomes an output for the entire flow.\nYou can see input and output parameters\
+      \ in action in the javascript-advanced.flow and the inner-flow-power.flow "
+    transactional: false
+    actors:
+      JavaScript2:
+        parent: JavaScript
+        in:
+          script:
+            const: |-
+              let r = "";
+              for (let i in input1) {
+                  r+= i + " " + input1[i];
+              }
+              r;
+          input1:
+            link: JsonParser1/object
+            schema: '#ref'
+        out:
+          result:
+            external: result
+            schema: string
+  streams:
+    remark: "Broadway has some powerful built in actors to deal with Input and Output\
+      \ streams as well as file system interaction. \n\nCheckout files.flow, http.flow,\
+      \ http-error.flow  "
+    transactional: false
+    dependsOn: more js + external
+    actors:
+      HttpDemoServer1:
+        parent: HttpDemoServer
+      Http1:
+        parent: Http
+        in:
+          interface:
+            const: http://localhost:8841
+          path:
+            const: /
+        out:
+          header:
+            schema: '#ref'
+    split: '--------------------'
+  inner flow:
+    remark: "You can invoke a flow using the InnerFlow actor. You can also package\
+      \ an entire flow as an actor using the main menu Actions > Save As Actor\n\n\
+      Check out the inner-flow.flow and inner-flow-power examples for more. "
+    transactional: false
+    dependsOn: more js + external
+    actors:
+      InnerFlow1:
+        parent: InnerFlow
+        in:
+          flowName:
+            const: inner-flow
+        out:
+          2pow8:
+            schema: integer
+    split: '--------------------'
+  publish:
+    remark: |-
+      Message Broker integration is available using the Publish/Subscribe actors.
+      You can use them for simple in memory communication or integration with Kafka/Pulsar/JMS etc.
+
+      See more details in message-broker-pubsub.example
+    transactional: false
+    dependsOn: more js + external
+    actors:
+      Publish1:
+        parent: Publish
+        in:
+          interface:
+            const: broker:memory
+          topic:
+            const: ExampleTopic
+          message:
+            const: Hello Broadway
+    split: '--------------------'
+  Stage 2:
+    transactional: false
+    dependsOn: more js + external
+    actors:
+      Sort1:
+        parent: Sort
+        remark: Check out the sort.flow example for different ways to use the Sort
+          actor
+        in:
+          input:
+            const:
+            - 1
+            - 3
+            - 2
+        out:
+          list:
+            schema: '#ref'
+      Lookup1:
+        parent: Lookup
+        remark: 'Check out lookup.flow actor for advanced use of the Lookup actor '
+        in:
+          lookupKeys:
+            const:
+            - a
+          lookupData:
+            const:
+            - a: Hello
+              b: Broadway
+            schema: '#ref'
+          a:
+            const: Hello
+            schema: string
+        out:
+          result:
+            schema: '#ref'
+  stringify the stream:
+    dependsOn: streams
+    actors:
+      Concat3:
+        parent: Concat
+        in:
+          elements:
+            link: Http1/stream
+    split: '--------------------'
+  Stage 5:
+    dependsOn: inner flow
+    split: '--------------------'
+  subscribe:
+    dependsOn: publish
+    actors:
+      Subscribe1:
+        parent: Subscribe
+        in:
+          interface:
+            const: broker:memory
+          topic:
+            const: ExampleTopic
+          poll_timeout:
+            const: 0
+        out:
+          message:
+            schema: '#ref'
+    split: '--------------------'
+  Stage 4:
+    transactional: false
+    dependsOn: Stage 2
+schemas:
+  JavaScript1.out.result:
+    type: object
+    properties:
+      data:
+        type: object
+        properties:
+          greeting:
+            type: string
+          product:
+            type: string
+  DbCommand1.out.result:
+    type: array
+    items:
+      type: object
+      properties:
+        compliment:
+          type: string
+  CsvParser1.out.object:
+    type: array
+    items:
+      type: object
+      properties:
+        Greeting:
+          type: string
+        Product:
+          type: string
+  JsonParser1.out.object:
+    type: object
+    properties:
+      Hello:
+        type: string
+  XmlParser1.out.object:
+    type: object
+    properties:
+      root:
+        type: object
+        properties:
+          a:
+            type: string
+          b#attr:
+            type: string
+          b:
+            type: string
+          c:
+            type: string
+  XmlParser1.out.info:
+    type: object
+    properties:
+      version:
+        type: string
+      standalone:
+        type: boolean
+      header:
+        type: string
+  JavaScript2.in.input1:
+    type: object
+    properties:
+      Hello:
+        type: string
+  Http1.out.header:
+    type: object
+    properties:
+      Content-Length:
+        type: integer
+      Date:
+        type: date
+  Sort1.out.list:
+    type: array
+    items:
+      type: number
+  Lookup1.in.lookupData:
+    type: array
+    items:
+      type: object
+      properties:
+        a:
+          type: string
+        b:
+          type: string
+  Lookup1.out.result:
+    type: object
+    properties:
+      a:
+        type: string
+      b:
+        type: string
+  Subscribe1.out.message:
+    type: array
+    items:
+      type: string

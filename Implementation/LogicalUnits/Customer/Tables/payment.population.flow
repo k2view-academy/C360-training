@@ -1,0 +1,111 @@
+stages:
+  Input:
+    actors:
+      PopulationArgs:
+        parent: PopulationArgs
+        readonly: true
+        in:
+          invoice_id:
+            external: invoice_id
+            schema: any
+            mandatory: false
+          payment_id:
+            external: payment_id
+            schema: any
+            mandatory: false
+          issued_date:
+            external: issued_date
+            schema: any
+            mandatory: false
+          status:
+            external: status
+            schema: any
+            mandatory: false
+          amount:
+            external: amount
+            schema: any
+            mandatory: false
+      SyncDeleteMode:
+        parent: SyncDeleteMode
+        in:
+          interface:
+            schema: any
+          table:
+            const: null
+            external: table
+  Source:
+    actors:
+      Query:
+        parent: SourceDbQuery
+        in:
+          interface:
+            const: BILLING_DB
+          sql:
+            const: select * from public.payment
+          parent_rows:
+            link: PopulationArgs/parent_rows
+        out:
+          result:
+            schema: '#ref'
+  Stage 1: {
+    }
+  LU Table:
+    last: 1
+    actors:
+      payment:
+        parent: DbLoad
+        in:
+          interface:
+            const: fabric
+          schema:
+            const: null
+            external: schema
+          table:
+            const: null
+            external: table
+          fields:
+            const:
+            - invoice_id
+            - payment_id
+            - issued_date
+            - status
+            - amount
+          keys:
+            const:
+          dialect:
+            const: sqlite
+          invoice_id:
+            schema: any
+          payment_id:
+            schema: any
+          issued_date:
+            schema: any
+          status:
+            schema: any
+          amount:
+            schema: any
+          params:
+            link:
+              path: Query/result
+              iterate: Iterate
+  Post Load: {
+    }
+schemas:
+  Query.out.result:
+    type: object
+    properties:
+      invoice_id:
+        type: {
+          }
+      payment_id:
+        type: {
+          }
+      issued_date:
+        type: {
+          }
+      status:
+        type: {
+          }
+      amount:
+        type: {
+          }

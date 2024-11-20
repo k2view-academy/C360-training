@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>ACT_SUM</Name>
+  <ID>tbl_ACT_SUM</ID>
+  <ColumnsCollation>BINARY</ColumnsCollation>
+  <FullTextSearch>false</FullTextSearch>
+  <Columns>
+    <Column name="CUSTOMER_ID" id="CUSTOMER_ID" index="0" datatype="Text" />
+    <Column name="NUM_OF_ACTIVITIES" id="NUM_OF_ACTIVITIES" index="1" datatype="integer" />
+    <Column name="SUMMARY_DATE" id="SUMMARY_DATE" index="2" datatype="Text" />
+    <Column name="ACTIVITY_SUMMARY" id="ACTIVITY_SUMMARY" index="3" datatype="Text" />
+  </Columns>
+  <IndexesList>
+  </IndexesList>
+  <EnrichmentList>
+  </EnrichmentList>
+  <LazyDataUpdate syncMethod="None" performEvery="1.00:00:00" syncWaitTimeout="60">
+    <DecisionFunction></DecisionFunction>
+    <TruncateBeforeSync>true</TruncateBeforeSync>
+  </LazyDataUpdate>
+</TableObject>

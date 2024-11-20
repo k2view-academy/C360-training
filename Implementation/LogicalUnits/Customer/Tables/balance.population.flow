@@ -1,0 +1,121 @@
+stages:
+  Input:
+    actors:
+      PopulationArgs:
+        parent: PopulationArgs
+        readonly: true
+        in:
+          subscriber_id:
+            external: subscriber_id
+            schema: any
+            mandatory: false
+          balance_id:
+            external: balance_id
+            schema: any
+            mandatory: false
+          balance_ref_id:
+            external: balance_ref_id
+            schema: any
+            mandatory: false
+          available_amount:
+            external: available_amount
+            schema: any
+            mandatory: false
+          reset_amount:
+            external: reset_amount
+            schema: any
+            mandatory: false
+          reset_date:
+            external: reset_date
+            schema: any
+            mandatory: false
+      SyncDeleteMode:
+        parent: SyncDeleteMode
+        in:
+          interface:
+            schema: any
+          table:
+            const: null
+            external: table
+  Source:
+    actors:
+      Query:
+        parent: SourceDbQuery
+        in:
+          interface:
+            const: BILLING_DB
+          sql:
+            const: select * from public.balance
+          parent_rows:
+            link: PopulationArgs/parent_rows
+        out:
+          result:
+            schema: '#ref'
+  Stage 1: {
+    }
+  LU Table:
+    last: 1
+    actors:
+      balance:
+        parent: DbLoad
+        in:
+          interface:
+            const: fabric
+          schema:
+            const: null
+            external: schema
+          table:
+            const: null
+            external: table
+          fields:
+            const:
+            - subscriber_id
+            - balance_id
+            - balance_ref_id
+            - available_amount
+            - reset_amount
+            - reset_date
+          keys:
+            const:
+          dialect:
+            const: sqlite
+          subscriber_id:
+            schema: any
+          balance_id:
+            schema: any
+          balance_ref_id:
+            schema: any
+          available_amount:
+            schema: any
+          reset_amount:
+            schema: any
+          reset_date:
+            schema: any
+          params:
+            link:
+              path: Query/result
+              iterate: Iterate
+  Post Load: {
+    }
+schemas:
+  Query.out.result:
+    type: object
+    properties:
+      subscriber_id:
+        type: {
+          }
+      balance_id:
+        type: {
+          }
+      balance_ref_id:
+        type: {
+          }
+      available_amount:
+        type: {
+          }
+      reset_amount:
+        type: {
+          }
+      reset_date:
+        type: {
+          }

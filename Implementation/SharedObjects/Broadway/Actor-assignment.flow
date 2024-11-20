@@ -1,0 +1,130 @@
+stages:
+  Stage 1:
+    actors:
+      DbCommand1:
+        parent: DbCommand
+        in:
+          interface:
+            const: CRM_DB
+          sql:
+            const: Select * From ACTIVITY Where CUSTOMER_ID = ${cust_id}
+          cust_id:
+            external: cust_id
+            schema: string
+            mandatory: false
+        out:
+          result:
+            schema: '#ref'
+  Stage 2:
+    actors:
+      JsonParser1:
+        parent: JsonParser
+        in:
+          single:
+            const: false
+          stream:
+            link: DbCommand1/result
+        out:
+          object:
+            schema: '#ref'
+  Stage 3:
+    last: 1
+    actors:
+      JavaScript1:
+        parent: JavaScript
+        in:
+          script:
+            const: |2-
+               self.count += 1;
+                 if (self.count >= 3) {
+                    contextLoop.stop();
+                 }
+                 self.count;
+      StringBuild1:
+        parent: StringBuild
+        in:
+          delimiter:
+            const: '**'
+          input:
+            link:
+              path: JsonParser1/object/activity_id
+              pos: 0
+  Stage 4:
+    actors:
+      Now1:
+        parent: Now
+  Stage 5:
+    actors:
+      JavaScript2:
+        parent: JavaScript
+        in:
+          script:
+            const: flowArgs["cust_id"];
+      DateFormat1:
+        parent: DateFormat
+        in:
+          date:
+            link: Now1/date
+  Stage 6:
+    transactional: true
+    actors:
+      ACT_SUM:
+        parent: DbLoad
+        in:
+          interface:
+            const: fabric
+          schema:
+            const: common
+          table:
+            const: ACT_SUM
+          fields:
+            const:
+            - CUSTOMER_ID
+            - NUM_OF_ACTIVITIES
+            - SUMMARY_DATE
+            - ACTIVITY_SUMMARY
+          CUSTOMER_ID:
+            link: JavaScript2/result
+            schema: any
+            mandatory: false
+          NUM_OF_ACTIVITIES:
+            link: JavaScript1/result
+            schema: any
+            mandatory: false
+          SUMMARY_DATE:
+            link: DateFormat1/string
+            schema: any
+            mandatory: false
+          ACTIVITY_SUMMARY:
+            link: StringBuild1/string
+            schema: any
+            mandatory: false
+  Stage 7: {
+    }
+schemas:
+  DbCommand1.out.result:
+    type: array
+    items:
+      type: object
+      properties:
+        customer_id:
+          type: integer
+        activity_id:
+          type: integer
+        activity_date:
+          type: date
+        activity_note:
+          type: string
+  JsonParser1.out.object:
+    type: array
+    items:
+      type: object
+      properties:
+        customer_id:
+          type: integer
+        activity_id:
+          type: integer
+        activity_date:
+          type: string
+        activity_note:
+          type: string

@@ -1,0 +1,141 @@
+stages:
+  Input:
+    actors:
+      PopulationArgs:
+        parent: PopulationArgs
+        readonly: true
+        in:
+          customer_id:
+            external: customer_id
+            schema: any
+            mandatory: false
+          address_id:
+            external: address_id
+            schema: any
+            mandatory: false
+          street_address_1:
+            external: street_address_1
+            schema: any
+            mandatory: false
+          street_address_2:
+            external: street_address_2
+            schema: any
+            mandatory: false
+          city:
+            external: city
+            schema: any
+            mandatory: false
+          zip:
+            external: zip
+            schema: any
+            mandatory: false
+          state:
+            external: state
+            schema: any
+            mandatory: false
+          country:
+            external: country
+            schema: any
+            mandatory: false
+      SyncDeleteMode:
+        parent: SyncDeleteMode
+        in:
+          interface:
+            schema: any
+          table:
+            const: null
+            external: table
+  Source:
+    actors:
+      Query:
+        parent: SourceDbQuery
+        in:
+          interface:
+            const: CRM_DB
+          sql:
+            const: select * from public.address
+          parent_rows:
+            link: PopulationArgs/parent_rows
+        out:
+          result:
+            schema: '#ref'
+  Stage 1: {
+    }
+  LU Table:
+    last: 1
+    actors:
+      address:
+        parent: DbLoad
+        in:
+          interface:
+            const: fabric
+          schema:
+            const: null
+            external: schema
+          table:
+            const: null
+            external: table
+          fields:
+            const:
+            - customer_id
+            - address_id
+            - street_address_1
+            - street_address_2
+            - city
+            - zip
+            - state
+            - country
+          keys:
+            const:
+          dialect:
+            const: sqlite
+          customer_id:
+            schema: any
+          address_id:
+            schema: any
+          street_address_1:
+            schema: any
+          street_address_2:
+            schema: any
+          city:
+            schema: any
+          zip:
+            schema: any
+          state:
+            schema: any
+          country:
+            schema: any
+          params:
+            link:
+              path: Query/result
+              iterate: Iterate
+  Post Load: {
+    }
+schemas:
+  Query.out.result:
+    type: object
+    properties:
+      customer_id:
+        type: {
+          }
+      address_id:
+        type: {
+          }
+      street_address_1:
+        type: {
+          }
+      street_address_2:
+        type: {
+          }
+      city:
+        type: {
+          }
+      zip:
+        type: {
+          }
+      state:
+        type: {
+          }
+      country:
+        type: {
+          }

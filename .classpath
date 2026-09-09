@@ -5,26 +5,26 @@
 	<classpathentry kind="src" path="Implementation/SharedObjects/Java/src" />
 	<classpathentry kind="src" path="Implementation/LogicalUnits/k2_ref/Java/src" />
 	<classpathentry kind="src" path="Implementation/LogicalUnits/k2_ws/Java/src" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/cdbms-core-8.4.0_174.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/cdbms-iid-finder-8.4.0_174.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/fabric-session-8.4.0_174.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/fabric-common-8.4.0_43.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/fabric-api-servlet-8.4.0_174.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/fabric-parser-8.4.0_174.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/fabricdb-8.4.0_43.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-web-8.4.0_67.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-testing-actors-8.4.0_67.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-masking-actors-8.4.0_67.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-image-actors-8.4.0_67.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-core-actors-8.4.0_67.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-8.4.0_67.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/graphit-8.4.0_5.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/discovery-sqlite-antlr-8.4.0_162.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/discovery-plugins-8.4.0_162.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/discovery-core-8.4.0_162.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/discovery-common-8.4.0_162.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/tomcat-servlet-api-10.1.52.jar" />
-	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/handlebars-4.5.0.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/cdbms-core-8.5.1_75.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/cdbms-iid-finder-8.5.1_75.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/fabric-session-8.5.1_75.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/fabric-common-8.5.1_7.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/fabric-api-servlet-8.5.1_75.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/fabric-parser-8.5.1_75.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/fabricdb-8.5.1_7.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-web-8.5.1_6.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-testing-actors-8.5.1_6.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-masking-actors-8.5.1_6.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-image-actors-8.5.1_6.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-core-actors-8.5.1_6.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/broadway-8.5.1_6.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/graphit-8.5.1_1.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/discovery-sqlite-antlr-8.5.1_11.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/discovery-plugins-8.5.1_11.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/discovery-core-8.5.1_11.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/discovery-common-8.5.1_11.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/tomcat-servlet-api-11.0.25.jar" />
+	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/handlebars-4.5.2.jar" />
 	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/fabric/k2-sqlite-jdbc-3.46.1.3_2.jar" />
 	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/provided/slf4j-api-2.0.9.jar" />
 	<classpathentry kind="lib" path="/opt/apps/fabric/workspace/fabric/lib/provided/logback-core-1.5.32.jar" />
